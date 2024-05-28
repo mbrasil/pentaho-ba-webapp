@@ -30,6 +30,16 @@ export default defineConfig(({ mode }) => ({
     }),
   ],
 
+  server: {
+    proxy: {
+      '/dev-proxy': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/dev-proxy/, ''),
+      }
+    }
+  },
+
   test: {
     globals: true,
     environment: "happy-dom",
