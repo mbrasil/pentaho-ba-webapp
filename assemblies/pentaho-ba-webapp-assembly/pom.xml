@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.pentaho</groupId>
+    <artifactId>pentaho-ba-webapp-assemblies</artifactId>
+    <version>10.2.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>pentaho-ba-webapp-assembly</artifactId>
+  <packaging>war</packaging>
+
+  <properties>
+    <package.resources.directory>${basedir}/src/main/webapp</package.resources.directory>
+    <prepared.war.directory>${project.build.directory}/pentaho-server/tomcat/webapps/pentaho-ba-webapp</prepared.war.directory>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>prepare-webapp</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.pentaho</groupId>
+                  <artifactId>pentaho-ba-webapp-webclient</artifactId>
+                  <version>${project.version}</version>
+                  <type>jar</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${prepared.war.directory}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webXml>${package.resources.directory}/WEB-INF/web.xml</webXml>
+          <webappDirectory>${prepared.war.directory}</webappDirectory>
+          <outputDirectory>${project.build.directory}</outputDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>unzip-assembly-to-local-biserver</id>
+      <activation>
+        <property>
+          <name>biserverHome</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>${maven-antrun-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>unzipIt</id>
+                <phase>install</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <echo message="Removing existing webapp from ${biserverHome}/tomcat/webapps"/>
+                    <delete includeemptydirs="true" dir="${biserverHome}/tomcat/webapps/pentaho-ba-webapp"/>
+                    <echo message="Unzipping webapp in ${biserverHome}/tomcat/webapps"/>
+                    <unzip src="${project.build.directory}/pentaho-ba-webapp-assembly-${project.version}.war"
+                           dest="${biserverHome}/tomcat/webapps/pentaho-ba-webapp"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
