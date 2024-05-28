@@ -22,8 +22,7 @@ export default (): HvAppShellConfig => ({
   },
 
   mainPanel: {
-    maxWidth: "xl",
-    views: [{bundle: "@self/pages/Welcome.js", route: "/index.html"}]
+    maxWidth: "xl"
   },
 
 });

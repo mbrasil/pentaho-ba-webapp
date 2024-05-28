@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-    "http://java.sun.com/dtd/web-app_2_3.dtd">
-
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
 
   <session-config>
@@ -9,21 +7,9 @@
     <session-timeout>120</session-timeout>
   </session-config>
 
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-
   <error-page>
     <error-code>404</error-code>
-    <location>/unavailable.html</location>
-  </error-page>
-  <error-page>
-    <error-code>403</error-code>
-    <location>/unavailable.html</location>
-  </error-page>
-  <error-page>
-    <error-code>500</error-code>
-    <location>/unavailable.html</location>
+    <location>/</location>
   </error-page>
 
 </web-app>
