@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => ({
     HvAppShellVitePlugin({
       mode,
       autoViewsAndRoutes: true,
-      autoMenu: true
+      autoMenu: false
     }),
   ],
 
