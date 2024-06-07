@@ -26,7 +26,8 @@ export default defineConfig(({ mode }) => ({
     HvAppShellVitePlugin({
       mode,
       autoViewsAndRoutes: true,
-      autoMenu: false
+      autoMenu: false,
+      modules: ["src/providers/Provider.tsx"],
     }),
   ],
 

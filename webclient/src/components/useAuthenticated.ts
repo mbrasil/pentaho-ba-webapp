@@ -5,7 +5,9 @@ const getAuthenticated = async (url: string) => {
     let isAuthenticated = false;
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            credentials: "include",
+        });
 
         if (!response.ok) {
             console.error("not ok:", response.statusText);

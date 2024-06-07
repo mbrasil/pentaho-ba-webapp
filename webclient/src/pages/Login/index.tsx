@@ -53,7 +53,10 @@ const Login = () => {
 
             await fetch(`${HOST}/pentaho/j_spring_security_check`, {
                 method: 'post',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                credentials: "include",
                 body: loginFormData
             }).then((resp) => navigate("/welcome"));
         } catch (ex) {

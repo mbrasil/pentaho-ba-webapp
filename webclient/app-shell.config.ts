@@ -59,4 +59,10 @@ export default (): HvAppShellConfig => ({
         },
     ],
 
+    providers: [
+        {
+            bundle: "@self/providers/Provider.js"
+        },
+    ],
+
 });
