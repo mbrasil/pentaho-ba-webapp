@@ -43,7 +43,7 @@ const StyledButton = styled(
 // #endregion
 
 const Login = () => {
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     async function callLogin(username: FormDataEntryValue, password: FormDataEntryValue) {
         try {
@@ -51,14 +51,32 @@ const Login = () => {
             loginFormData.append("j_username", username.toString());
             loginFormData.append("j_password", password.toString());
 
-            await fetch(`${HOST}/pentaho/j_spring_security_check`, {
-                method: 'post',
+            const response = await fetch(`${HOST}/pentaho/j_spring_security_check`, {
+                method: "post",
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    "Content-Type": "application/x-www-form-urlencoded"
                 },
                 credentials: "include",
+                redirect: "manual",
                 body: loginFormData
-            }).then((resp) => navigate("/welcome"));
+            });
+
+            if (response.ok || response.redirected) {
+                const cookieHeader = response.headers.get("Set-Cookie");
+
+                if (cookieHeader) {
+                    const cookies = cookieHeader.split(", ");
+                    cookies.forEach(cookie => {
+                        console.log(cookie);
+                    });
+
+                    //navigate("/welcome")
+                }
+
+                return;
+            }
+
+            // handle errors
         } catch (ex) {
             console.error("error logging user", ex);
         }
