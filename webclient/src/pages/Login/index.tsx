@@ -47,7 +47,7 @@ const Login = () => {
 
     async function callLogin(username: FormDataEntryValue, password: FormDataEntryValue) {
         try {
-            const loginFormData = new FormData();
+            const loginFormData = new URLSearchParams();
             loginFormData.append("j_username", username.toString());
             loginFormData.append("j_password", password.toString());
 
@@ -58,7 +58,7 @@ const Login = () => {
                 },
                 credentials: "include",
                 redirect: "manual",
-                body: loginFormData
+                body: loginFormData.toString()
             });
 
             if (response.ok || response.redirected) {
