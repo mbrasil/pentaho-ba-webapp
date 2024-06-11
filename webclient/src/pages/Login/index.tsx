@@ -43,43 +43,21 @@ const StyledButton = styled(
 // #endregion
 
 const Login = () => {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    async function callLogin(username: FormDataEntryValue, password: FormDataEntryValue) {
-        try {
-            const loginFormData = new URLSearchParams();
-            loginFormData.append("j_username", username.toString());
-            loginFormData.append("j_password", password.toString());
+    async function callLogin(username: string, password: string) {
+        const loginFormData = new URLSearchParams();
+        loginFormData.append("j_username", username);
+        loginFormData.append("j_password", password);
 
-            const response = await fetch(`${HOST}/pentaho/j_spring_security_check`, {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                credentials: "include",
-                redirect: "manual",
-                body: loginFormData.toString()
-            });
-
-            if (response.ok || response.redirected) {
-                const cookieHeader = response.headers.get("Set-Cookie");
-
-                if (cookieHeader) {
-                    const cookies = cookieHeader.split(", ");
-                    cookies.forEach(cookie => {
-                        console.log(cookie);
-                    });
-
-                    //navigate("/welcome")
-                }
-
-                return;
-            }
-
-            // handle errors
-        } catch (ex) {
-            console.error("error logging user", ex);
-        }
+        return await fetch(`${HOST}/pentaho/j_spring_security_check`, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            credentials: "include",
+            body: loginFormData.toString()
+        });
     }
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -88,7 +66,13 @@ const Login = () => {
         const formData = new FormData(event.currentTarget);
         const {username, password} = Object.fromEntries(formData.entries());
 
-        await callLogin(username, password);
+        const response = await callLogin(username.toString(), password.toString());
+
+        if (response.ok) {
+            navigate("/welcome")
+        } else {
+            // handle errors
+        }
     };
 
     return (
