@@ -4,15 +4,15 @@ import {HOST} from "../pages/BrowseFiles/useBrowseFiles";
 const getAuthenticated = async (url: string) => {
     let isAuthenticated = false;
 
-    await fetch(url, {
+    const response = await fetch(url, {
         credentials: "include",
-    }).then(response => {
-        if (!response.ok) {
-            console.error("not ok:", response.statusText);
-        } else {
-            isAuthenticated = true;
-        }
-    }).catch(error => console.log('error', error));
+    });
+
+    const body = await response.text();
+
+    if (body !== "anonymousUser") {
+        isAuthenticated = true;
+    }
 
     return isAuthenticated;
 }
@@ -21,7 +21,7 @@ export default () => {
     const {
         data: isAuthenticated,
         ...others
-    } = useSWR(() => `${HOST}/pentaho/api/mantle/isAuthenticated`, getAuthenticated);
+    } = useSWR(() => `${HOST}/pentaho/api/session/userName`, getAuthenticated);
 
     return {isAuthenticated, ...others};
 }
