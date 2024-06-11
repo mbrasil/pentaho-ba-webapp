@@ -11,7 +11,7 @@ import {
     theme
 } from "@hitachivantara/uikit-react-core";
 import {HOST} from "../BrowseFiles/useBrowseFiles";
-import {useNavigate} from "react-router-dom";
+import {useHvNavigation} from "@hitachivantara/app-shell-navigation";
 
 // #region Styled components
 
@@ -43,7 +43,7 @@ const StyledButton = styled(
 // #endregion
 
 const Login = () => {
-    const navigate = useNavigate();
+    const {navigate} = useHvNavigation();
 
     async function callLogin(username: string, password: string) {
         const loginFormData = new URLSearchParams();
@@ -69,11 +69,13 @@ const Login = () => {
         const response = await callLogin(username.toString(), password.toString());
 
         if (response.ok) {
-            navigate("/welcome")
+            navigate({viewBundle: "/pages/Home"})
         } else {
             // handle errors
         }
     };
+
+    //only render if not auth, if auth redirect to home
 
     return (
         <HvLogin background="https://lumada-design.github.io/assets/login-bg1.png">
