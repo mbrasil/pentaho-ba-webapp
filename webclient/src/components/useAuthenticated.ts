@@ -1,5 +1,6 @@
 import useSWR from "swr";
-import {HOST} from "../pages/BrowseFiles/useBrowseFiles";
+
+export const HOST = import.meta.env.VITE_HOST ?? "";
 
 const getAuthenticated = async (url: string) => {
     let isAuthenticated = false;
@@ -18,7 +19,6 @@ const getAuthenticated = async (url: string) => {
 }
 
 export default () => {
-    // need to somehow eliminate the cache here or something else because I need to click twice on the menus for it to work
     const {
         data: isAuthenticated,
         ...others

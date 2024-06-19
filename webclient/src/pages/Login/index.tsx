@@ -1,4 +1,5 @@
-import React, {FormEventHandler, forwardRef} from "react";
+import React, {FormEventHandler, forwardRef, useCallback, useEffect} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import styled from "@emotion/styled";
 import {
     HvButton,
@@ -10,8 +11,7 @@ import {
     PolymorphicRef,
     theme
 } from "@hitachivantara/uikit-react-core";
-import {HOST} from "../BrowseFiles/useBrowseFiles";
-import {useHvNavigation} from "@hitachivantara/app-shell-navigation";
+import useAuthenticated, {HOST} from "../../components/useAuthenticated";
 
 // #region Styled components
 
@@ -42,38 +42,52 @@ const StyledButton = styled(
 
 // #endregion
 
+async function callLogin(username: string, password: string) {
+    const loginFormData = new URLSearchParams();
+    loginFormData.append("j_username", username);
+    loginFormData.append("j_password", password);
+
+    return await fetch(`${HOST}/pentaho/j_spring_security_check`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        credentials: "include",
+        body: loginFormData.toString()
+    });
+}
+
 const Login = () => {
-    const {navigate} = useHvNavigation();
+    const { isAuthenticated, mutate: authMutate } = useAuthenticated();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    async function callLogin(username: string, password: string) {
-        const loginFormData = new URLSearchParams();
-        loginFormData.append("j_username", username);
-        loginFormData.append("j_password", password);
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate(location.state?.from ?? "/welcome");
+        }
+    }, [isAuthenticated]);
 
-        return await fetch(`${HOST}/pentaho/j_spring_security_check`, {
-            method: "post",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            credentials: "include",
-            body: loginFormData.toString()
-        });
-    }
-
-    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(async (event) => {
+        console.log("handle login submit", event);
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
         const {username, password} = Object.fromEntries(formData.entries());
 
-        const response = await callLogin(username.toString(), password.toString());
+        try {
+            const response = await callLogin(username.toString(), password.toString());
 
-        if (response.ok) {
-            navigate({viewBundle: "/pages/Home"})
-        } else {
-            // handle errors
+            if (response.ok) {
+                await authMutate();
+                navigate(location.state?.from ?? "/welcome");
+            } else {
+                // handle errors
+            }
+        } catch (error) {
+            console.error("error on login", error);
         }
-    };
+    }, []);
 
     //only render if not auth, if auth redirect to home
 
