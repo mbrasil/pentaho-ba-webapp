@@ -7,6 +7,7 @@ export default (): HvAppShellConfig => ({
 
     header: {
         actions: [
+            { bundle: "@self/headerActions/ChangeLocale/index.js" },
             {
                 bundle: "@hv/help-client/button.js",
                 config: {

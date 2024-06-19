@@ -27,7 +27,10 @@ export default defineConfig(({ mode }) => ({
       mode,
       autoViewsAndRoutes: true,
       autoMenu: false,
-      modules: ["src/providers/Provider.tsx"],
+      modules: [
+        "src/headerActions/ChangeLocale/index.ts",
+        "src/providers/Provider.tsx",
+      ],
     }),
   ],
 

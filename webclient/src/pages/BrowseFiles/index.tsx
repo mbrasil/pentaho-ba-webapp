@@ -1,12 +1,13 @@
-import React, {useState} from "react";
-import {css} from "@emotion/css";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { css } from "@emotion/css";
 import {
   HvButton,
   HvGrid, HvMultiButton,
   HvTypography, theme
 } from "@hitachivantara/uikit-react-core";
 import RepositoryTree from "./RepositoryTree";
-import {HOST, PentahoFile} from "./useBrowseFiles";
+import { HOST, PentahoFile } from "./useBrowseFiles";
 import ProtectedComponent from "../../components/ProtectedComponent";
 
 const buildAnalyzerUrl = (path: string, mode: string, locale: string) => {
@@ -16,9 +17,9 @@ const buildAnalyzerUrl = (path: string, mode: string, locale: string) => {
 }
 
 export default () => {
+  const { t, i18n } = useTranslation("browseFiles");
   const [file, setFile] = useState<PentahoFile>();
   const [mode, setMode] = useState("viewer");
-  const [locale, setLocale] = useState("en");
 
   return (
     <ProtectedComponent>
@@ -34,19 +35,19 @@ export default () => {
             </HvTypography>
 
               <HvMultiButton className={css({ display: "flex", padding: theme.space.xs })}>
-                {["Viewer", "Editor"].map((label) => (
+                {["viewer", "editor"].map((id) => (
                   <HvButton
-                    key={label}
-                    selected={label.toLowerCase() === mode}
-                    onClick={() => setMode(label.toLowerCase())}
-                  >{label}</HvButton>
+                    key={id}
+                    selected={id === mode}
+                    onClick={() => setMode(id)}
+                  >{t(`mode.${id}`)}</HvButton>
                 ))}
               </HvMultiButton>
           </HvGrid>
 
           <HvGrid item xs={12}>
             {file?.path?.endsWith(".xanalyzer") && (
-              <iframe src={buildAnalyzerUrl(file.path, mode, locale)} width="100%" height="100%"></iframe>
+              <iframe src={buildAnalyzerUrl(file.path, mode, i18n.language)} width="100%" height="100%"></iframe>
             )}
           </HvGrid>
         </HvGrid>
