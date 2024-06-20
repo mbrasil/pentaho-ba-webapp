@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => ({
       modules: [
         "src/headerActions/ChangeLocale/index.ts",
         "src/providers/Provider.tsx",
+        "src/pages/Analyzer",
       ],
     }),
   ],

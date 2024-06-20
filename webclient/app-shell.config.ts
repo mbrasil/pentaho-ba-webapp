@@ -1,7 +1,7 @@
 import type {HvAppShellConfig} from "@hitachivantara/app-shell-vite-plugin";
 
 export default (): HvAppShellConfig => ({
-    name: "uikit-app",
+    name: "PUC AppShell+uikit POC",
 
     baseUrl: "/pentaho-ba-webapp/",
 
@@ -46,7 +46,14 @@ export default (): HvAppShellConfig => ({
     },
 
     mainPanel: {
-        maxWidth: "xl"
+        maxWidth: "xl",
+        views: [{
+            bundle: "@self/pages/Analyzer.js",
+            route: "/analyzer",
+            config: {
+                url: "http://localhost:8080/pentaho/api/repos/xanalyzer/editor?showFieldList=true&showFieldLayout=true&catalog=pentaho_operations_mart&cube=BA%20Operations%20Mart%20-%20Component&autoRefresh=true&showRepositoryButtons=true"
+            },
+        },]
     },
 
     menu: [
@@ -58,6 +65,10 @@ export default (): HvAppShellConfig => ({
             label: "Browse Files",
             target: "/browsefiles"
         },
+        {
+            label: "Analyzer",
+            target: "/analyzer"
+        },
     ],
 
     providers: [
@@ -66,4 +77,5 @@ export default (): HvAppShellConfig => ({
         },
     ],
 
+    navigationMode: "ONLY_LEFT"
 });
