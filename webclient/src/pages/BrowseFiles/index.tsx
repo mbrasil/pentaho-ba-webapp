@@ -16,6 +16,34 @@ const buildAnalyzerUrl = (path: string, mode: string, locale: string) => {
   return `${HOST}/pentaho/api/repos/${file}/${mode}?showRepositoryButtons=true&locale=${locale}`;
 }
 
+const buildCDAUrl = (path: string) => {
+  return `${HOST}/pentaho/plugin/cda/api/previewQuery?path=${path}`;
+}
+
+const buildFileContentUrl = (path: string) => {
+  const file = path.replaceAll("/", ":");
+
+  return `${HOST}/pentaho/api/repos/${file}/content`;
+}
+
+const buildFileGeneratedContentUrl = (path: string) => {
+  const file = path.replaceAll("/", ":");
+
+  return `${HOST}/pentaho/api/repos/${file}/generatedContent`;
+}
+
+const buildFileViewerUrl = (path: string) => {
+  const file = path.replaceAll("/", ":");
+
+  return `${HOST}/pentaho/api/repos/${file}/viewer`;
+}
+
+const buildPRPTIUrl = (path: string, mode: string) => {
+  const file = path.replaceAll("/", ":");
+
+  return `${HOST}/pentaho/api/repos/${file}/prpti.${mode === "viewer" ? "view" : "edit"}`;
+}
+
 export default () => {
   const { t, i18n } = useTranslation("browseFiles");
   const [file, setFile] = useState<PentahoFile>();
@@ -48,6 +76,21 @@ export default () => {
           <HvGrid item xs={12}>
             {file?.path?.endsWith(".xanalyzer") && (
               <iframe src={buildAnalyzerUrl(file.path, mode, i18n.language)} width="100%" height="100%"></iframe>
+            )}
+            {file?.path?.endsWith(".cda") && (
+              <iframe src={buildCDAUrl(file.path)} width="100%" height="100%"></iframe>
+            )}
+            {file?.path && new RegExp(/\.(cdfde|css|gif|html|js|pdf|png)$/i).test(file.path) && (
+              <iframe src={buildFileContentUrl(file.path)} width="100%" height="100%"></iframe>
+            )}
+            {file?.path && new RegExp(/\.(kjb|ktr|prpt)$/i).test(file.path) && (
+              <iframe src={buildFileViewerUrl(file.path)} width="100%" height="100%"></iframe>
+            )}
+            {file?.path?.endsWith(".prpti") && (
+              <iframe src={buildPRPTIUrl(file.path, mode)} width="100%" height="100%"></iframe>
+            )}
+            {file?.path && new RegExp(/\.(wcdf|xcdf)$/i).test(file.path) && (
+              <iframe src={buildFileGeneratedContentUrl(file.path)} width="100%" height="100%"></iframe>
             )}
           </HvGrid>
         </HvGrid>
