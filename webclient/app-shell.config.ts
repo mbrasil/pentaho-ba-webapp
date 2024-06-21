@@ -51,7 +51,7 @@ export default (): HvAppShellConfig => ({
             bundle: "@self/pages/Analyzer.js",
             route: "/analyzer",
             config: {
-                url: "http://localhost:8080/pentaho/api/repos/xanalyzer/editor?showFieldList=true&showFieldLayout=true&catalog=pentaho_operations_mart&cube=BA%20Operations%20Mart%20-%20Component&autoRefresh=true&showRepositoryButtons=true"
+                url: "http://localhost:8080/pentaho/api/repos/xanalyzer/service/selectSchema"
             },
         },]
     },
