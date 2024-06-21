@@ -1,4 +1,4 @@
-import {css} from "@emotion/css";
+import {css, cx} from "@emotion/css";
 import {theme} from "@hitachivantara/uikit-react-core";
 
 export interface AnalyzerProps {
@@ -20,7 +20,7 @@ const classes = {
 const Analyzer: React.FC<AnalyzerProps> = ({ url = "" }) => {
 
     return (
-        <div className={classes.root + ' ' + classes.fullHeight}>
+        <div className={cx(classes.root, classes.fullHeight)}>
             <iframe className={classes.fullHeight} src={url}></iframe>
         </div>
     );
