@@ -1,8 +1,7 @@
 import { useCallback } from "react";
 import useSWR from "swr";
-import useAuthenticated from "../../components/useAuthenticated";
-
-const HOST = import.meta.env.VITE_HOST ?? "";
+import { HOST } from "../utils";
+import useAuthenticated from "./useAuthenticated";
 
 export const setPentahoLocale = async (locale: string) => {
   try {

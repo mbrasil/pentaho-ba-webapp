@@ -6,9 +6,10 @@ import {
   HvGrid, HvMultiButton,
   HvTypography, theme
 } from "@hitachivantara/uikit-react-core";
+import ProtectedComponent from "../../components/common/ProtectedComponent";
+import { PentahoFile } from "../../lib/hooks/useBrowseFiles";
+import { HOST } from "../../lib/utils";
 import RepositoryTree from "./RepositoryTree";
-import { HOST, PentahoFile } from "./useBrowseFiles";
-import ProtectedComponent from "../../components/ProtectedComponent";
 
 const buildAnalyzerUrl = (path: string, mode: string, locale: string) => {
   const file = path.replaceAll("/", ":");

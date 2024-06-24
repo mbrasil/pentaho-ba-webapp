@@ -1,5 +1,6 @@
-import {useCallback, useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
+import { HOST } from "../utils";
 
 export interface PentahoFile {
   objectId: string;
@@ -13,8 +14,6 @@ export interface PentahoFileTree {
   file: PentahoFile,
   children: PentahoFileTree[];
 }
-
-export const HOST = import.meta.env.VITE_HOST ?? "";
 
 export default () => {
   const [finalData, setFinalData] = useState<PentahoFileTree>();

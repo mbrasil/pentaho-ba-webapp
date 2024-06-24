@@ -6,7 +6,7 @@ import {
   theme,
 } from "@hitachivantara/uikit-react-core";
 import { Heart, Palette } from "@hitachivantara/uikit-react-icons";
-import ProtectedComponent from "../../components/ProtectedComponent";
+import ProtectedComponent from "../../components/common/ProtectedComponent";
 
 const classes = {
   root: css({

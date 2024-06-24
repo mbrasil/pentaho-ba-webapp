@@ -1,8 +1,8 @@
 import React from "react";
 import {HvGrid} from "@hitachivantara/uikit-react-core";
 import {HvDashboard} from "@hitachivantara/uikit-react-lab";
+import ProtectedComponent from "../../components/common/ProtectedComponent";
 import classes from "./styles";
-import ProtectedComponent from "../../components/ProtectedComponent";
 
 export default () => {
   return (

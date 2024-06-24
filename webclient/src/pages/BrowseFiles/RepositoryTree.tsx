@@ -1,8 +1,8 @@
-import React, {forwardRef, ReactNode} from "react";
-import {Doc, Folders } from "@hitachivantara/uikit-react-icons";
-import {HvLoading, HvPanel, HvTreeItem, HvTreeView } from "@hitachivantara/uikit-react-core";
+import React, { forwardRef, ReactNode } from "react";
+import { Doc, Folders } from "@hitachivantara/uikit-react-icons";
+import { HvLoading, HvPanel, HvTreeItem, HvTreeView } from "@hitachivantara/uikit-react-core";
 import { css } from "@emotion/css";
-import useBrowseFiles, {PentahoFile} from "./useBrowseFiles";
+import useBrowseFiles, { PentahoFile } from "../../lib/hooks/useBrowseFiles";
 
 interface PentahoTreeItemProps {
   file: PentahoFile;

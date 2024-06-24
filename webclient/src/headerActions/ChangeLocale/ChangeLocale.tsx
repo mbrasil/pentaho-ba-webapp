@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { HvDropDownMenu, HvListValue, HvTooltip } from "@hitachivantara/uikit-react-core";
-import usePentahoLocale, { setPentahoLocale } from "./usePentahoLocale";
+import usePentahoLocale, { setPentahoLocale } from "../../lib/hooks/usePentahoLocale";
 
 const localeData = [
   { id: "en", label: "English" },
