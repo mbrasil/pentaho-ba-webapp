@@ -62,6 +62,10 @@ export default (): HvAppShellConfig => ({
             target: "/welcome"
         },
         {
+            label: "Home",
+            target: "/home"
+        },
+        {
             label: "Browse Files",
             target: "/browsefiles"
         },

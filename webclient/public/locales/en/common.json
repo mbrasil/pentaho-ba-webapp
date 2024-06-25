@@ -1,5 +1,13 @@
 {
   "headerActions": {
     "changeLocale": "Change locale"
+  },
+  "type": {
+    "xanalyzer": "Analysis Report",
+    "xcdf": "CDF Dashboard",
+    "wcdf": "CDE Dashboard",
+    "xdash": "Pentaho Dashboard",
+    "prpt": "Pentaho Report",
+    "prpti": "Pentaho Interactive Report"
   }
 }
