@@ -1,9 +1,9 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import useAuthenticated from "../../lib/hooks/useAuthenticated";
+import { useSessionContext } from "../../providers/Provider";
 
 const ProtectedComponent = ({children}: any) => {
-  const { isAuthenticated } = useAuthenticated();
+  const { isAuthenticated, username } = useSessionContext();
   const location = useLocation();
 
   if (!isAuthenticated) {

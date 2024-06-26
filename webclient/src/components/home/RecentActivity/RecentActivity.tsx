@@ -65,7 +65,7 @@ const RecentActivity = () => {
       <HvTypography variant="label">Based on your recent activity (WIP)</HvTypography>
 
       <HvTabs value={tab} onChange={handleTabChange}>
-        <HvTab icon={<Preview />} iconPosition="start" label="RecentActivity" />
+        <HvTab icon={<Preview />} iconPosition="start" label="Recent" />
         <HvTab icon={<Heart />} iconPosition="start"  label="Favourites" />
       </HvTabs>
 

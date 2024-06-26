@@ -11,8 +11,7 @@ import {
   PolymorphicRef,
   theme
 } from "@hitachivantara/uikit-react-core";
-import useAuthenticated from "../../lib/hooks/useAuthenticated";
-import { HOST } from "../../lib/utils";
+import { useSessionContext } from "../../providers/Provider";
 
 // region Styled components
 
@@ -43,29 +42,14 @@ const StyledButton = styled(
 
 // endregion
 
-async function callLogin(username: string, password: string) {
-  const loginFormData = new URLSearchParams();
-  loginFormData.append("j_username", username);
-  loginFormData.append("j_password", password);
-
-  return await fetch(`${HOST}/pentaho/j_spring_security_check`, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    credentials: "include",
-    body: loginFormData.toString()
-  });
-}
-
 const Login = () => {
-  const { isAuthenticated, mutate: authMutate } = useAuthenticated();
+  const { isAuthenticated, login } = useSessionContext();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(location.state?.from ?? "/welcome");
+      navigate(location.state?.from ?? "/home");
     }
   }, [isAuthenticated]);
 
@@ -75,18 +59,11 @@ const Login = () => {
     const formData = new FormData(event.currentTarget);
     const { username, password } = Object.fromEntries(formData.entries());
 
-    try {
-      const response = await callLogin(username.toString(), password.toString());
+    await login(username.toString(), password.toString());
+    // if (await login(username.toString(), password.toString())){
+    //   navigate(location.state?.from ?? "/welcome")
+    // }
 
-      if (response.ok) {
-        await authMutate();
-        navigate(location.state?.from ?? "/welcome");
-      } else {
-        // handle errors
-      }
-    } catch (error) {
-      console.error("error on login", error);
-    }
   }, []);
 
   // only render if not auth, if auth redirect to home

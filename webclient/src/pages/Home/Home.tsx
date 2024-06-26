@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   HvButton,
   HvGrid,
@@ -10,6 +10,7 @@ import { HvDashboard } from "@hitachivantara/uikit-react-lab";
 import ProtectedComponent from "../../components/common/ProtectedComponent";
 import RecentActivity from "../../components/home/RecentActivity/RecentActivity";
 import classes from "./styles";
+import { useSessionContext } from "../../providers/Provider";
 
 const layout = [
   { i: 'quick-access', h: 1, w: 12, x: 0, y: 0 },
@@ -17,6 +18,8 @@ const layout = [
 ];
 
 export default () => {
+  const { username } = useSessionContext();
+
   const [canDrag, setCanDrag] = useState(false);
   const [canResize, setCanResize] = useState(false);
 
@@ -28,7 +31,7 @@ export default () => {
             <HvGrid item>
               <div className={classes.header}>
                 <HvTypography variant="xxsTitle">Welcome to Pentaho User Console</HvTypography>
-                <HvTypography variant="mTitle">Username</HvTypography>
+                <HvTypography variant="mTitle">{username}</HvTypography>
               </div>
             </HvGrid>
             <HvGrid item>

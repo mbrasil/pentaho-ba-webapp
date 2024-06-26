@@ -4,8 +4,10 @@ export const range = (len: number) => Array.from(Array(len), (v, i) => i);
 
 export const parseUserSettingFiles = (data: string) => {
   try {
+    const list = data?.length > 0 ? JSON.parse(data) : [];
+
     // @ts-ignore
-    return JSON.parse(data).map(({ fullPath, title, lastUse }) => {
+    return list.map(({ fullPath, title, lastUse }) => {
       const tokens = fullPath.split("/");
       const { [tokens.length - 1]: filename } = tokens;
 

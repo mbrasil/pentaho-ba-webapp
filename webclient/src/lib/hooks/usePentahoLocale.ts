@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import useSWR from "swr";
 import { HOST } from "../utils";
-import useAuthenticated from "./useAuthenticated";
+import { useSessionContext } from "../../providers/Provider";
 
 export const setPentahoLocale = async (locale: string) => {
   try {
@@ -41,7 +41,7 @@ const getLocale = async (url: string) => {
 }
 
 export default () => {
-  const { isAuthenticated } = useAuthenticated();
+  const { isAuthenticated } = useSessionContext();
 
   const fetchLocale = useCallback((url: string) => {
     if (!isAuthenticated) {
